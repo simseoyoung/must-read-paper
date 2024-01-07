@@ -53,6 +53,7 @@ class CatBoostTrainer(BaseModel):
 
         model = CatBoostClassifier(
             random_state=self.cfg.models.seed,
+            cat_features=self.cfg.features.cat_features,
             **self.cfg.models.params,
         )
 

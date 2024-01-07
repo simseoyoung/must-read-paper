@@ -70,9 +70,9 @@ class BaseModel(ABC):
                     if isinstance(model, lgb.Booster)
                     else model.predict(xgb.DMatrix(X_valid))
                     if isinstance(model, xgb.Booster)
-                    else model.predict(X_valid.to_numpy()).reshape(-1)
+                    else model.predict_proba(X_valid.to_numpy()).reshape(-1)
                     if isinstance(model, TabNetClassifier)
-                    else model.predict(X_valid)
+                    else model.predict_proba(X_valid)
                 )
                 models[f"fold_{fold}"] = model
                 scores.field_names = ["FOLD", "LogLoss"]
@@ -82,6 +82,6 @@ class BaseModel(ABC):
             gc.collect()
 
         print(f"{scores.get_string()}")
-        print(f"CV Score\n {log_loss(y, oof_preds)}")
+        print(f"CV Score: {log_loss(y, oof_preds)}")
 
         self.result = ModelResult(oof_preds=oof_preds, models=models)
