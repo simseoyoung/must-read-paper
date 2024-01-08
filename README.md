@@ -8,3 +8,6 @@ cdal matser's seminar
     + CatBoost
 
 2. SSY
+   + DQN
+
+   
